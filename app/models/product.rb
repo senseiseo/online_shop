@@ -6,6 +6,12 @@ class Product < ApplicationRecord
   has_rich_text :description
   has_many_attached :images
 
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
+  scope :published, -> { where(published: true) }
+  scope :visible, -> { published.joins(:category).where(categories: { published: true }) }
+
   validates :name, :slug, presence: true
   validates :slug, uniqueness: true
   validates :price_cents, numericality: { only_integer: true, greater_than_or_equal_to: 0 }

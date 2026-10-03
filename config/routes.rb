@@ -2,6 +2,11 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
   root "storefront#show"
+  get "catalog", to: "catalog#index"
+  resources :categories, only: :show, param: :slug
+  resources :products, only: :show, param: :slug
+  resources :posts, only: %i[index show], param: :slug
+  resources :inquiries, only: %i[new create]
   ActiveAdmin.routes(self)
   direct(:admin) { admin_root_path }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

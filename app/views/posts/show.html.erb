@@ -1,0 +1,2 @@
+<% content_for :title, @post.title %>
+<article class="prose w-full max-w-3xl"><% if @post.cover.attached? %><%= image_tag @post.cover, class: "mb-6 w-full rounded", alt: @post.title %><% end %><h1><%= @post.title %></h1><%= @post.content %></article>

@@ -11,6 +11,12 @@ ActiveAdmin.register Category do
     redirect_to resource_path, alert: "Categories with products cannot be deleted."
   end
 
+  controller do
+    def find_resource
+      scoped_collection.friendly.find(params[:id])
+    end
+  end
+
   index do
     selectable_column
     id_column

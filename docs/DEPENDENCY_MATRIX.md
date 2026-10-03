@@ -14,22 +14,16 @@ Stage 1 uses Rails 8.1.4 application defaults. Exact resolved versions are in
 | Tailwind | `tailwindcss-rails` | Rails-supported Tailwind integration. |
 | Solid Cache / Cable | Rails defaults | Database-backed Rails adapters; no Redis. |
 | RSpec / FactoryBot | `rspec-rails`, `factory_bot_rails` | Requested Rails test stack and concise test data. |
+| FriendlyId | `5.7.0` | Human-readable Product, Category, and Post URLs. |
+| Pagy | `43.7.0` | Catalog and post pagination. |
 | RuboCop / Brakeman / bundler-audit | Rails defaults plus `rubocop-rspec` | Style and security checks; RSpec coverage. |
 
-## Deferred gem compatibility check
+## Catalog gem compatibility
 
-Pagy, FriendlyId, and ActiveAdmin remain deferred to their owning stages: they
-add no Stage 1 behaviour. `bin/check-deferred-gems` creates an isolated Ruby
-3.4.2 / Rails `~> 8.1.3` bundle, installs the three gems, prints their
-resolved versions, and requires each library. Both `bin/ci` and GitHub Actions
-run this same check.
-
-**Not verified yet.** On 2026-10-03, the disposable `bundle install` failed
-with `Could not reach host index.rubygems.org`; this workspace has neither DNS
-access nor cached copies of the three gems. The configured GitHub CLI token is
-also invalid, so this checkout cannot dispatch the workflow. The first
-successful `bin/ci` or GitHub Actions run is the compatibility evidence and
-must be recorded here with its resolved versions before those gems are adopted.
+On 2026-10-03, Ruby 3.4.2 / Rails 8.1.4 loaded FriendlyId 5.7.0 and Pagy
+43.7.0 from the resolved `Gemfile.lock`. The catalog request specs exercise
+FriendlyId routes and Pagy 43's `pagy(:offset, collection)` / `series_nav`
+API.
 
 ## Security audit
 
