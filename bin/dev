@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+bin/rails tailwindcss:watch &
+css_pid=$!
+trap 'kill "$css_pid"' EXIT INT TERM
+
+bin/rails server "$@"

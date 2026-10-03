@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+set -eu
+
+directory=$(mktemp -d)
+trap 'rm -rf "$directory"' EXIT
+
+cat > "$directory/Gemfile" <<'GEMFILE'
+source "https://rubygems.org"
+ruby "3.4.2"
+gem "rails", "~> 8.1.3"
+gem "pagy"
+gem "friendly_id"
+gem "activeadmin"
+GEMFILE
+
+BUNDLE_GEMFILE="$directory/Gemfile" BUNDLE_PATH="$directory/bundle" bundle install
+rg '^    (activeadmin|friendly_id|pagy|rails) \(' "$directory/Gemfile.lock"
+BUNDLE_GEMFILE="$directory/Gemfile" BUNDLE_PATH="$directory/bundle" bundle exec ruby -e 'require "rails"; require "pagy"; require "friendly_id"; require "active_admin"'
