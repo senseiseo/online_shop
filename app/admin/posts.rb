@@ -10,6 +10,12 @@ ActiveAdmin.register Post do
     redirect_to collection_path, notice: "Post deleted."
   end
 
+  controller do
+    def find_resource
+      scoped_collection.friendly.find(params[:id])
+    end
+  end
+
   index do
     id_column
     column :title

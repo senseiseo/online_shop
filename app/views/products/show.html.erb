@@ -1,0 +1,9 @@
+<% content_for :title, @product.name %>
+<article class="w-full max-w-4xl">
+  <p class="text-sm text-stone-500"><%= link_to @product.category.name, category_path(@product.category), class: "underline" %></p>
+  <h1 class="mt-2 text-3xl font-bold"><%= @product.name %></h1>
+  <div class="mt-6 grid gap-6 md:grid-cols-2">
+    <div class="space-y-3"><% @product.images.each do |image| %><%= image_tag image, class: "w-full rounded object-cover", alt: @product.name %><% end %></div>
+    <div><p class="text-2xl font-semibold"><%= rubles(@product.price_cents) %></p><p class="mt-4 text-stone-600"><%= @product.short_description %></p><div class="prose mt-6"><%= @product.description %></div></div>
+  </div>
+</article>

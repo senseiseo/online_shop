@@ -14,6 +14,10 @@ ActiveAdmin.register Product do
   end
 
   controller do
+    def find_resource
+      scoped_collection.friendly.find(params[:id])
+    end
+
     def update
       params[:product]&.delete(:images) if params.dig(:product, :images)&.all?(&:blank?)
       super
