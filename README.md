@@ -5,10 +5,12 @@ visitors, not customer accounts; `User` will mean a staff member only.
 
 ## Current stage
 
-Stage 1 configures Rails 8.1, Ruby 3.4, SQLite, ERB, Propshaft, Importmap,
-Hotwire, Tailwind, Solid Cache/Cable, RSpec, FactoryBot, and baseline CI checks.
-The domain models, authentication, admin, catalogue, cart, checkout, content,
-and deployment are deliberately future stages.
+Stage 2 adds Rails built-in staff authentication. `User` has `admin`, `editor`,
+and `manager` roles; `/admin` requires an authenticated staff session. Sign in
+is at `/session`; there is no customer registration or customer login.
+
+ActiveAdmin remains Stage 5. It must use this `User` session, without Devise or
+an `AdminUser` model.
 
 ## Setup
 
