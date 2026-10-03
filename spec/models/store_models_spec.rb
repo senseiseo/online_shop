@@ -17,6 +17,41 @@ RSpec.describe "store models" do
     expect(create(:cart, visitor: cart.visitor)).to be_active
   end
 
+  it "finds or creates one active cart for a visitor" do
+    visitor = create(:visitor)
+
+    expect { visitor.find_or_create_active_cart }.to change(Cart, :count).by(1)
+    expect(visitor.find_or_create_active_cart).to eq(visitor.active_cart)
+  end
+
+  it "creates a new active cart after the current cart is converted" do
+    visitor = create(:visitor)
+    converted_cart = visitor.find_or_create_active_cart
+    converted_cart.converted!
+
+    expect { visitor.find_or_create_active_cart }.to change(Cart, :count).by(1)
+    expect(visitor.find_or_create_active_cart).to be_active
+    expect(visitor.carts.converted).to contain_exactly(converted_cart)
+  end
+
+  it "recovers when another request creates the active cart first" do
+    visitor = create(:visitor)
+    racing_visitor = Visitor.find(visitor.id)
+    expect(racing_visitor.active_cart).to be_nil
+    cart = visitor.carts.create!
+
+    expect(racing_visitor.find_or_create_active_cart).to eq(cart)
+  end
+
+  it "persists cart items while allowing quantity changes and removal" do
+    item = create(:cart_item, quantity: 1)
+
+    item.update!(quantity: 2)
+    expect(item.reload.quantity).to eq(2)
+
+    expect { item.destroy! }.to change(CartItem, :count).by(-1)
+  end
+
   it "requires positive cart item quantities and one item per product" do
     item = build(:cart_item, quantity: 0)
 

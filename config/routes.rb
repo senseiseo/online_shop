@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
-  root to: redirect("/admin")
+  root "storefront#show"
   get "admin" => "admin/dashboard#show", as: :admin
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
