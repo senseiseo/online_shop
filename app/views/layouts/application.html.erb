@@ -24,7 +24,7 @@
   </head>
 
   <body class="bg-stone-50 text-stone-900">
-    <header class="border-b border-stone-200 bg-white"><nav class="container mx-auto flex items-center justify-between px-5 py-4" aria-label="Main navigation"><%= link_to "Магазин", root_path, class: "font-bold" %><div class="flex gap-4 text-sm"><%= link_to "Каталог", catalog_path %><%= link_to "Статьи", posts_path %><%= link_to "Контакты", new_inquiry_path %></div></nav></header>
+    <header class="border-b border-stone-200 bg-white"><nav class="container mx-auto flex items-center justify-between px-5 py-4" aria-label="Main navigation"><%= link_to "Магазин", root_path, class: "font-bold" %><div class="flex gap-4 text-sm"><%= link_to "Каталог", catalog_path %><%= link_to "Статьи", posts_path %><%= link_to "Контакты", new_inquiry_path %><%= link_to "Оформить заказ", new_checkout_path %></div></nav></header>
     <main class="container mx-auto px-5 py-10">
       <%= yield %>
     </main>

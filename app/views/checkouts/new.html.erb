@@ -1,0 +1,14 @@
+<% content_for :title, "Оформление заказа" %>
+<section class="w-full max-w-xl">
+  <h1 class="text-3xl font-bold">Оформление заказа</h1>
+  <%= form_with model: @order, url: checkout_path, class: "mt-6 space-y-4" do |form| %>
+    <%= form.hidden_field :cart_id, value: @cart.id %>
+    <% if @order.errors.any? %><div class="rounded border border-red-300 p-3 text-red-800"><%= @order.errors.full_messages.to_sentence %></div><% end %>
+    <div><%= form.label :name, "Имя" %><%= form.text_field :name, required: true, class: "mt-1 block w-full rounded border-stone-300" %></div>
+    <div><%= form.label :phone, "Телефон" %><%= form.telephone_field :phone, class: "mt-1 block w-full rounded border-stone-300" %></div>
+    <div><%= form.label :email, "Email" %><%= form.email_field :email, class: "mt-1 block w-full rounded border-stone-300" %></div>
+    <div><%= form.label :comment, "Комментарий" %><%= form.text_area :comment, rows: 4, class: "mt-1 block w-full rounded border-stone-300" %></div>
+    <div><%= form.label :payment_method, "Способ оплаты" %><%= form.select :payment_method, Order.payment_methods.keys.map { |method| [method.humanize, method] }, {}, class: "mt-1 block w-full rounded border-stone-300" %></div>
+    <%= form.submit "Создать заказ", class: "rounded bg-stone-900 px-4 py-2 text-white" %>
+  <% end %>
+</section>

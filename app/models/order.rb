@@ -15,6 +15,10 @@ class Order < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
   validate :contact_present
 
+  def self.next_number
+    "#{Time.current.strftime('%Y%m%d')}-#{SecureRandom.hex(6).upcase}"
+  end
+
   private
 
   def contact_present

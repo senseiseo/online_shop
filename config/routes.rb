@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   resources :products, only: :show, param: :slug
   resources :posts, only: %i[index show], param: :slug
   resources :inquiries, only: %i[new create]
+  resource :checkout, only: %i[new create] do
+    get "success/:number", action: :success, as: :success
+  end
   ActiveAdmin.routes(self)
   direct(:admin) { admin_root_path }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
