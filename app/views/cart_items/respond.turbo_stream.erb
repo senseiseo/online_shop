@@ -1,0 +1,2 @@
+<%= turbo_stream.update "cart_counter", current_cart.cart_items.sum(:quantity) %>
+<%= turbo_stream.update "cart" do %><%= render "carts/cart", cart: current_cart %><% end %>

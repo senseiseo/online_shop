@@ -22,4 +22,5 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   config.include FactoryBot::Syntax::Methods
   config.before(:each, type: :system) { driven_by :rack_test }
+  config.before(:each, :js, type: :system) { driven_by :selenium, using: :headless_chrome, screen_size: [ 1440, 900 ] }
 end

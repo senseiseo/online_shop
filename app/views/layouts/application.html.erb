@@ -1,8 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
   <head>
-    <title><%= content_for(:title) || "Online Shop" %></title>
+    <% title = content_for(:title) || "Магазин" %>
+    <% description = content_for(:description) || "Небольшой магазин предметов для дома." %>
+    <title><%= title %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="<%= description %>">
+    <link rel="canonical" href="<%= request.base_url + request.path %>">
+    <meta property="og:title" content="<%= title %>">
+    <meta property="og:description" content="<%= description %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= request.base_url + request.path %>">
+    <% if content_for?(:image) %><meta property="og:image" content="<%= content_for(:image) %>"><% end %>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Online Shop">
     <meta name="mobile-web-app-capable" content="yes">
@@ -24,8 +33,33 @@
   </head>
 
   <body class="bg-stone-50 text-stone-900">
-    <header class="border-b border-stone-200 bg-white"><nav class="container mx-auto flex items-center justify-between px-5 py-4" aria-label="Main navigation"><%= link_to "Магазин", root_path, class: "font-bold" %><div class="flex gap-4 text-sm"><%= link_to "Каталог", catalog_path %><%= link_to "Статьи", posts_path %><%= link_to "Контакты", new_inquiry_path %><%= link_to "Оформить заказ", new_checkout_path %></div></nav></header>
+    <header class="border-b border-stone-200 bg-white" data-controller="menu">
+      <nav class="container mx-auto px-5 py-4" aria-label="Основная навигация">
+        <div class="flex items-center justify-between">
+          <%= link_to "Магазин", root_path, class: "font-bold" %>
+          <div class="flex items-center gap-3">
+            <%= link_to cart_path, class: "font-medium text-sm" do %>
+              Корзина (<span id="cart_counter"><%= current_cart.cart_items.sum(:quantity) %></span>)
+            <% end %>
+            <button type="button" class="rounded p-2 md:hidden" aria-label="Открыть меню" aria-expanded="false" data-action="menu#toggle" data-menu-target="button">Меню</button>
+          </div>
+          <div class="hidden items-center gap-4 text-sm md:flex">
+            <%= link_to "Каталог", catalog_path %>
+            <%= link_to "Статьи", posts_path %>
+            <%= link_to "Контакты", new_inquiry_path %>
+          </div>
+        </div>
+        <div class="hidden pt-4 text-sm md:hidden" data-menu-target="links">
+          <div class="flex flex-col gap-3">
+            <%= link_to "Каталог", catalog_path %>
+            <%= link_to "Статьи", posts_path %>
+            <%= link_to "Контакты", new_inquiry_path %>
+          </div>
+        </div>
+      </nav>
+    </header>
     <main class="container mx-auto px-5 py-10">
+      <% if notice.present? %><p class="mb-5 rounded border border-green-300 bg-green-50 p-3" role="status"><%= notice %></p><% end %>
       <%= yield %>
     </main>
   </body>

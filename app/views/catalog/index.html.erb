@@ -1,4 +1,4 @@
-<% content_for :title, "Каталог" %>
+<% page_metadata title: "Каталог", description: "Каталог предметов для дома." %>
 <section class="w-full">
   <h1 class="text-3xl font-bold">Каталог</h1>
   <%= form_with url: catalog_path, method: :get, class: "mt-5 flex flex-wrap gap-3", data: { turbo: false } do |form| %>
