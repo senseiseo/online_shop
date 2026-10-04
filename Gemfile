@@ -70,4 +70,5 @@ end
 group :test do
   # Capybara is the requested Rails/RSpec browser-test stack.
   gem "capybara"
+  gem "selenium-webdriver", "~> 4.0"
 end

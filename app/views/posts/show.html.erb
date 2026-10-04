@@ -1,2 +1,2 @@
-<% content_for :title, @post.title %>
+<% page_metadata title: @post.title, description: @post.excerpt, image: (@post.cover.attached? ? rails_blob_url(@post.cover) : nil) %>
 <article class="prose w-full max-w-3xl"><% if @post.cover.attached? %><%= image_tag @post.cover, class: "mb-6 w-full rounded", alt: @post.title %><% end %><h1><%= @post.title %></h1><%= @post.content %></article>

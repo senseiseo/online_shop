@@ -9,4 +9,5 @@
     <h3 class="text-lg font-semibold text-stone-900"><%= product.name %></h3>
     <p class="mt-2 font-medium text-stone-900"><%= rubles(product.price_cents) %></p>
   <% end %>
+  <%= button_to "В корзину", cart_items_path, params: { cart_item: { product_id: product.id } }, class: "mt-4 w-full rounded bg-stone-900 px-3 py-2 text-sm font-medium text-white" %>
 </article>

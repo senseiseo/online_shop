@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<% @records.each do |url, updated_at| %><url><loc><%= url %></loc><% if updated_at %><lastmod><%= updated_at.to_date.iso8601 %></lastmod><% end %></url><% end %>
+</urlset>

@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :products, only: :show, param: :slug
   resources :posts, only: %i[index show], param: :slug
   resources :inquiries, only: %i[new create]
+  resource :cart, only: :show
+  resources :cart_items, only: %i[create update destroy]
   resource :checkout, only: %i[new create] do
     get "success/:number", action: :success, as: :success
   end
@@ -17,6 +19,8 @@ Rails.application.routes.draw do
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
+  get "robots.txt", to: "seo#robots", defaults: { format: :text }
+  get "sitemap.xml", to: "seo#sitemap", defaults: { format: :xml }
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
