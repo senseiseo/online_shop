@@ -23,16 +23,27 @@ if Rails.env.development?
     end
   end
 
+  product_images = %w[side-table.jpg table-lamp.jpg ceramic-vase.jpg].map do |filename|
+    Rails.root.join("db", "seed_assets", "products", filename)
+  end
+
   10.times do |index|
     category = categories[index % categories.size]
-    Product.find_or_create_by!(slug: "sample-product-#{index + 1}") do |product|
-      product.category = category
-      product.name = "Sample product #{index + 1}"
-      product.short_description = "Development catalog product #{index + 1}"
-      product.price_cents = (index + 1) * 10_000
-      product.published = true
-      product.featured = index < 3
-      product.position = index
+    product = Product.find_or_create_by!(slug: "sample-product-#{index + 1}") do |item|
+      item.category = category
+      item.name = "Sample product #{index + 1}"
+      item.short_description = "Development catalog product #{index + 1}"
+      item.price_cents = (index + 1) * 10_000
+      item.published = true
+      item.featured = index < 3
+      item.position = index
+    end
+
+    unless product.images.attached?
+      image_path = product_images[index % product_images.length]
+      File.open(image_path, "rb") do |file|
+        product.images.attach(io: file, filename: image_path.basename.to_s, content_type: "image/jpeg")
+      end
     end
   end
 
