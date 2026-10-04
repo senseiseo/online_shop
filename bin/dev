@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
 
 bin/rails tailwindcss:watch &
-css_pid=$!
-trap 'kill "$css_pid"' EXIT INT TERM
+tailwind_pid=$!
+bin/rails dartsass:watch &
+sass_pid=$!
+trap 'kill "$tailwind_pid" "$sass_pid"' EXIT INT TERM
 
 bin/rails server "$@"
