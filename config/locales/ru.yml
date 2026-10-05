@@ -1,0 +1,304 @@
+ru:
+  i18n:
+    transliterate:
+      rule:
+        А: A
+        Б: B
+        В: V
+        Г: G
+        Д: D
+        Е: E
+        Ё: E
+        Ж: Zh
+        З: Z
+        И: I
+        Й: Y
+        К: K
+        Л: L
+        М: M
+        Н: N
+        О: O
+        П: P
+        Р: R
+        С: S
+        Т: T
+        У: U
+        Ф: F
+        Х: Kh
+        Ц: Ts
+        Ч: Ch
+        Ш: Sh
+        Щ: Shch
+        Ы: Y
+        Э: E
+        Ю: Yu
+        Я: Ya
+        Ь: ""
+        Ъ: ""
+        а: a
+        б: b
+        в: v
+        г: g
+        д: d
+        е: e
+        ё: e
+        ж: zh
+        з: z
+        и: i
+        й: y
+        к: k
+        л: l
+        м: m
+        н: n
+        о: o
+        п: p
+        р: r
+        с: s
+        т: t
+        у: u
+        ф: f
+        х: kh
+        ц: ts
+        ч: ch
+        ш: sh
+        щ: shch
+        ы: y
+        э: e
+        ю: yu
+        я: ya
+        ь: ""
+        ъ: ""
+  date:
+    formats:
+      default: "%d.%m.%Y"
+      short: "%d %b"
+      long: "%d %B %Y"
+    month_names:
+      -
+      - "января"
+      - "февраля"
+      - "марта"
+      - "апреля"
+      - "мая"
+      - "июня"
+      - "июля"
+      - "августа"
+      - "сентября"
+      - "октября"
+      - "ноября"
+      - "декабря"
+  time:
+    formats:
+      default: "%d.%m.%Y %H:%M"
+      short: "%d %b %H:%M"
+      long: "%d %B %Y, %H:%M"
+  activerecord:
+    models:
+      user:
+        one: "Сотрудник"
+        other: "Сотрудники"
+      product:
+        one: "Товар"
+        other: "Товары"
+      category:
+        one: "Категория"
+        other: "Категории"
+      order:
+        one: "Заказ"
+        other: "Заказы"
+      order_item:
+        one: "Позиция заказа"
+        other: "Позиции заказа"
+      inquiry:
+        one: "Обращение"
+        other: "Обращения"
+      visitor:
+        one: "Посетитель"
+        other: "Посетители"
+      cart:
+        one: "Корзина"
+        other: "Корзины"
+      cart_item:
+        one: "Позиция корзины"
+        other: "Позиции корзины"
+      post:
+        one: "Статья"
+        other: "Статьи"
+    attributes:
+      user:
+        email_address: "Электронная почта"
+        password: "Пароль"
+        password_confirmation: "Подтверждение пароля"
+        role: "Роль"
+        created_at: "Дата создания"
+        updated_at: "Дата обновления"
+        roles:
+          admin: "Администратор"
+          editor: "Редактор"
+          manager: "Менеджер"
+      product:
+        category: "Категория"
+        category_id: "Категория"
+        name: "Название"
+        slug: "Адрес"
+        short_description: "Краткое описание"
+        description: "Описание"
+        price_cents: "Цена"
+        old_price_cents: "Старая цена"
+        published: "Опубликован"
+        featured: "Избранный"
+        position: "Позиция"
+        images: "Изображения"
+      category:
+        name: "Название"
+        slug: "Адрес"
+        description: "Описание"
+        position: "Позиция"
+        published: "Опубликована"
+      order:
+        number: "Номер"
+        visitor: "Посетитель"
+        cart: "Корзина"
+        name: "Имя"
+        phone: "Телефон"
+        email: "Электронная почта"
+        comment: "Комментарий"
+        status: "Статус заказа"
+        payment_method: "Способ оплаты"
+        payment_status: "Статус оплаты"
+        total_price_cents: "Сумма"
+        created_at: "Дата создания"
+        statuses:
+          new: "Новый"
+          confirmed: "Подтверждён"
+          processing: "В обработке"
+          ready: "Готов к выдаче"
+          completed: "Завершён"
+          cancelled: "Отменён"
+        payment_methods:
+          cash: "Наличными"
+          card_on_pickup: "Картой при получении"
+          transfer: "Переводом"
+        payment_statuses:
+          unpaid: "Не оплачен"
+          paid: "Оплачен"
+      order_item:
+        order: "Заказ"
+        product: "Товар"
+        product_name: "Название товара"
+        quantity: "Количество"
+        unit_price_cents: "Цена за единицу"
+        total_price_cents: "Сумма"
+      inquiry:
+        visitor: "Посетитель"
+        name: "Имя"
+        phone: "Телефон"
+        email: "Электронная почта"
+        message: "Сообщение"
+        status: "Статус"
+        created_at: "Дата создания"
+        statuses:
+          new: "Новое"
+          read: "Прочитано"
+          answered: "Отвечено"
+          closed: "Закрыто"
+      visitor:
+        token: "Токен"
+        name: "Имя"
+        phone: "Телефон"
+        email: "Электронная почта"
+        first_seen_at: "Первый визит"
+        last_seen_at: "Последний визит"
+      cart:
+        visitor: "Посетитель"
+        status: "Статус"
+        created_at: "Дата создания"
+        updated_at: "Дата обновления"
+        statuses:
+          active: "Активная"
+          converted: "Оформлена"
+          abandoned: "Брошена"
+      cart_item:
+        cart: "Корзина"
+        product: "Товар"
+        quantity: "Количество"
+      post:
+        title: "Заголовок"
+        slug: "Адрес"
+        excerpt: "Краткое описание"
+        content: "Содержание"
+        cover: "Обложка"
+        published: "Опубликована"
+        published_at: "Дата публикации"
+        created_at: "Дата создания"
+      active_admin/comment:
+        author_type: "Тип автора"
+        body: "Текст"
+        created_at: "Дата создания"
+        resource_type: "Тип ресурса"
+        updated_at: "Дата обновления"
+  formtastic:
+    yes: "Да"
+    no: "Нет"
+    create: "Создать %{model}"
+    update: "Сохранить %{model}"
+    submit: "Сохранить %{model}"
+    cancel: "Отмена"
+    required: "обязательно"
+  active_admin:
+    create_another: "Создать ещё один объект: %{model}"
+    pagination:
+      per_page: "На странице: "
+    index_list:
+      table: "Таблица"
+      block: "Список"
+      grid: "Сетка"
+      blog: "Блог"
+  admin:
+    site_title: "Интернет-магазин"
+    dashboard:
+      orders: "Заказы"
+      inquiries: "Обращения"
+      new: "Новые"
+      today: "Сегодня"
+      completed_paid_revenue: "Выручка по оплаченным заказам"
+      active_carts: "Активные корзины"
+      latest_orders: "Последние заказы"
+    carts:
+      items: "Товары"
+    visitors:
+      token: "Токен"
+      active_cart: "Активная корзина"
+      carts: "Корзины"
+      orders: "Заказы"
+      inquiries: "Обращения"
+    products:
+      description: "Описание"
+      delete: "Удалить товар"
+      deleted: "Товар удалён."
+      cannot_delete: "Товары, добавленные в корзины или заказы, нельзя удалить."
+    categories:
+      delete: "Удалить категорию"
+      deleted: "Категория удалена."
+      cannot_delete: "Категории с товарами нельзя удалить."
+    posts:
+      delete: "Удалить статью"
+      deleted: "Статья удалена."
+    users:
+      delete: "Удалить сотрудника"
+      deleted: "Сотрудник удалён."
+    orders:
+      items: "Товары"
+      status_updated: "Статус заказа обновлён."
+      payment_status_updated: "Статус оплаты обновлён."
+      statuses:
+        new: "Подтвердить"
+        confirmed: "Подтверждён"
+        processing: "В обработке"
+        ready: "Готов к выдаче"
+        completed: "Завершён"
+        cancelled: "Отменён"
+      mark_payment: "Отметить: %{status}"
+      payment_statuses:
+        unpaid: "не оплачен"
+        paid: "оплачен"

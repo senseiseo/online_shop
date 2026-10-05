@@ -10,13 +10,13 @@ ActiveAdmin.register Order do
   member_action :set_status, method: :patch do
     authorize! :set_status, resource
     resource.update!(status: params.require(:status)) if Order.statuses.key?(params[:status])
-    redirect_to resource_path, notice: "Order status updated."
+    redirect_to resource_path, notice: I18n.t("admin.orders.status_updated")
   end
 
   member_action :set_payment_status, method: :patch do
     authorize! :set_payment_status, resource
     resource.update!(payment_status: params.require(:payment_status)) if Order.payment_statuses.key?(params[:payment_status])
-    redirect_to resource_path, notice: "Payment status updated."
+    redirect_to resource_path, notice: I18n.t("admin.orders.payment_status_updated")
   end
 
   index do
@@ -47,7 +47,7 @@ ActiveAdmin.register Order do
       row :total_price_cents
     end
 
-    panel "Items" do
+    panel I18n.t("admin.orders.items") do
       table_for order.order_items do
         column :product_name
         column :quantity
@@ -62,7 +62,7 @@ ActiveAdmin.register Order do
       Order.statuses.each_key do |status|
         next if resource.status == status
 
-        text_node button_to(status.humanize, set_status_admin_order_path(resource), method: :patch, params: { status: status }, form: { class: "inline" })
+        text_node button_to(I18n.t("admin.orders.statuses.#{status}"), set_status_admin_order_path(resource), method: :patch, params: { status: status }, form: { class: "inline" })
       end
       nil
     end
@@ -73,7 +73,7 @@ ActiveAdmin.register Order do
       Order.payment_statuses.each_key do |status|
         next if resource.payment_status == status
 
-        text_node button_to("Mark #{status}", set_payment_status_admin_order_path(resource), method: :patch, params: { payment_status: status }, form: { class: "inline" })
+        text_node button_to(I18n.t("admin.orders.mark_payment", status: I18n.t("admin.orders.payment_statuses.#{status}")), set_payment_status_admin_order_path(resource), method: :patch, params: { payment_status: status }, form: { class: "inline" })
       end
       nil
     end

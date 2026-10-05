@@ -89,7 +89,16 @@ RSpec.describe "Admin resources", type: :request do
     get admin_root_path
 
     expect(response).to have_http_status(:success)
-    expect(response.body).not_to include(order.number, order.name, inquiry.message, "Completed paid revenue", "Active carts")
+    expect(response.body).not_to include(order.number, order.name, inquiry.message, "Выручка по оплаченным заказам", "Активные корзины")
+  end
+
+  it "renders the ActiveAdmin interface in Russian" do
+    sign_in(admin)
+
+    get admin_products_path
+
+    expect(response).to have_http_status(:success)
+    expect(response.body).to include("Товары", "Фильтровать", "Название", "Интернет-магазин")
   end
 
   it "deletes empty categories and posts but keeps categories with products" do

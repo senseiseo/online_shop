@@ -19,17 +19,17 @@ RSpec.describe "Admin resource actions", type: :system do
     sign_in
 
     visit admin_order_path(order)
-    click_button "Confirmed"
+    click_button I18n.t("admin.orders.statuses.confirmed")
     expect(order.reload).to be_confirmed
-    click_button "Mark paid"
+    click_button I18n.t("admin.orders.mark_payment", status: I18n.t("admin.orders.payment_statuses.paid"))
     expect(order.reload).to be_paid
 
     visit admin_product_path(product)
-    click_button "Delete product"
+    click_button I18n.t("admin.products.delete")
     expect(Product.where(id: product.id)).to be_empty
 
     visit admin_root_path
-    click_button "Logout"
+    click_button I18n.t("active_admin.logout")
     expect(page).to have_text("Sign in")
   end
 end

@@ -6,9 +6,9 @@ ActiveAdmin.register Category do
 
   member_action :remove, method: :delete do
     resource.destroy!
-    redirect_to collection_path, notice: "Category deleted."
+    redirect_to collection_path, notice: I18n.t("admin.categories.deleted")
   rescue ActiveRecord::DeleteRestrictionError
-    redirect_to resource_path, alert: "Categories with products cannot be deleted."
+    redirect_to resource_path, alert: I18n.t("admin.categories.cannot_delete")
   end
 
   controller do
@@ -39,6 +39,6 @@ ActiveAdmin.register Category do
   end
 
   action_item :remove, only: :show do
-    text_node button_to("Delete category", remove_admin_category_path(resource), method: :delete, form: { class: "inline" })
+    text_node button_to(I18n.t("admin.categories.delete"), remove_admin_category_path(resource), method: :delete, form: { class: "inline" })
   end
 end

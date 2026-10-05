@@ -19,7 +19,7 @@ ActiveAdmin.register Cart do
       row :created_at
       row :updated_at
     end
-    panel "Items" do
+    panel I18n.t("admin.carts.items") do
       table_for cart.cart_items do
         column :product
         column :quantity

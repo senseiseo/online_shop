@@ -1,5 +1,5 @@
 ActiveAdmin.setup do |config|
-  config.site_title = "Online Shop"
+  config.site_title = proc { I18n.t("admin.site_title") }
   config.authentication_method = :authenticate_admin!
   config.current_user_method = :current_user
   config.authorization_adapter = "AdminAuthorizationAdapter"
@@ -25,7 +25,7 @@ class ActiveAdmin::Views::Header
     global_navigation menu, class: "header-item tabs"
     div id: "utility_nav", class: "header-item tabs" do
       span helpers.current_user.email_address
-      text_node helpers.button_to("Logout", helpers.session_path, method: :delete, form: { class: "logout" })
+      text_node helpers.button_to(I18n.t("active_admin.logout"), helpers.session_path, method: :delete, form: { class: "logout" })
     end
   end
 end

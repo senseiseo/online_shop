@@ -8,9 +8,9 @@ ActiveAdmin.register Product do
 
   member_action :remove, method: :delete do
     resource.destroy!
-    redirect_to collection_path, notice: "Product deleted."
+    redirect_to collection_path, notice: I18n.t("admin.products.deleted")
   rescue ActiveRecord::DeleteRestrictionError
-    redirect_to resource_path, alert: "Products in carts or orders cannot be deleted."
+    redirect_to resource_path, alert: I18n.t("admin.products.cannot_delete")
   end
 
   controller do
@@ -70,12 +70,12 @@ ActiveAdmin.register Product do
         ul { product.images.each { |image| li image.filename.to_s } }
       end
     end
-    panel "Description" do
+    panel I18n.t("admin.products.description") do
       product.description
     end
   end
 
   action_item :remove, only: :show do
-    text_node button_to("Delete product", remove_admin_product_path(resource), method: :delete, form: { class: "inline" })
+    text_node button_to(I18n.t("admin.products.delete"), remove_admin_product_path(resource), method: :delete, form: { class: "inline" })
   end
 end

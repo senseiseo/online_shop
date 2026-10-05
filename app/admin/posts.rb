@@ -7,7 +7,7 @@ ActiveAdmin.register Post do
 
   member_action :remove, method: :delete do
     resource.destroy!
-    redirect_to collection_path, notice: "Post deleted."
+    redirect_to collection_path, notice: I18n.t("admin.posts.deleted")
   end
 
   controller do
@@ -42,6 +42,6 @@ ActiveAdmin.register Post do
   end
 
   action_item :remove, only: :show do
-    text_node button_to("Delete post", remove_admin_post_path(resource), method: :delete, form: { class: "inline" })
+    text_node button_to(I18n.t("admin.posts.delete"), remove_admin_post_path(resource), method: :delete, form: { class: "inline" })
   end
 end
