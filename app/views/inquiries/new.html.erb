@@ -1,11 +1,13 @@
 <% content_for :title, "Связаться с нами" %>
-<section class="w-full max-w-xl"><h1 class="text-3xl font-bold">Связаться с нами</h1>
-  <%= form_with model: @inquiry, class: "mt-6 space-y-4" do |form| %>
-    <% if @inquiry.errors.any? %><div class="rounded border border-red-300 p-3 text-red-800"><%= @inquiry.errors.full_messages.to_sentence %></div><% end %>
-    <div><%= form.label :name, "Имя" %><%= form.text_field :name, required: true, class: "mt-1 block w-full rounded border-stone-300" %></div>
-    <div><%= form.label :phone, "Телефон" %><%= form.telephone_field :phone, class: "mt-1 block w-full rounded border-stone-300" %></div>
-    <div><%= form.label :email, "Email" %><%= form.email_field :email, class: "mt-1 block w-full rounded border-stone-300" %></div>
-    <div><%= form.label :message, "Сообщение" %><%= form.text_area :message, required: true, rows: 5, class: "mt-1 block w-full rounded border-stone-300" %></div>
-    <%= form.submit "Отправить", class: "rounded bg-stone-900 px-4 py-2 text-white" %>
-  <% end %>
+<section class="w-full">
+  <div class="max-w-2xl"><p class="text-sm font-semibold uppercase tracking-[0.16em] text-[#71835a]">Мы на связи</p><h1 class="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">Давайте поговорим.</h1><p class="mt-4 leading-7 text-[#70796f]">Расскажите, что ищете, — поможем подобрать предмет или ответим на вопрос по заказу.</p></div>
+  <div class="mt-10 max-w-2xl rounded-[1.5rem] border border-[#dfe2d5] bg-white/75 p-6 sm:p-8">
+    <%= form_with model: @inquiry, class: "space-y-5" do |form| %>
+      <% if @inquiry.errors.any? %><div class="rounded-2xl border border-[#edc6bc] bg-[#fff0ec] p-4 text-sm text-[#8f3f32]" role="alert"><p class="font-semibold">Проверьте данные</p><ul class="mt-2 list-inside list-disc"><% @inquiry.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul></div><% end %>
+      <div><%= form.label :name, "Имя", class: "flex items-center gap-2 text-sm font-semibold" do %><%= icon(:user, size: 16, class_name: "size-4 text-[#71835a]") %> Имя<% end %><%= form.text_field :name, required: true, autocomplete: "name", class: "field-control mt-2" %></div>
+      <div class="grid gap-5 sm:grid-cols-2"><div><%= form.label :phone, "Телефон", class: "flex items-center gap-2 text-sm font-semibold" do %><%= icon(:phone, size: 16, class_name: "size-4 text-[#71835a]") %> Телефон<% end %><%= form.telephone_field :phone, inputmode: "tel", autocomplete: "tel", class: "field-control mt-2" %></div><div><%= form.label :email, "Email", class: "flex items-center gap-2 text-sm font-semibold" do %><%= icon(:mail, size: 16, class_name: "size-4 text-[#71835a]") %> Email<% end %><%= form.email_field :email, autocomplete: "email", class: "field-control mt-2" %></div></div>
+      <div><%= form.label :message, "Сообщение", class: "flex items-center gap-2 text-sm font-semibold" do %><%= icon(:message, size: 16, class_name: "size-4 text-[#71835a]") %> Сообщение<% end %><%= form.text_area :message, required: true, rows: 5, class: "field-control mt-2 resize-y" %></div>
+      <%= form.submit "Отправить сообщение", class: "inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#223329] px-5 py-3.5 font-semibold text-white transition hover:bg-[#526548] sm:w-auto" %>
+    <% end %>
+  </div>
 </section>

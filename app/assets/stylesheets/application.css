@@ -8,3 +8,36 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+:root {
+  color-scheme: light;
+}
+
+::selection {
+  background: #c9d7aa;
+  color: #1e2a22;
+}
+
+.field-control {
+  width: 100%;
+  border: 1px solid #d8d8cd;
+  border-radius: 0.9rem;
+  background: #fffefa;
+  padding: 0.8rem 0.95rem;
+  color: #1e2a22;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.field-control::placeholder {
+  color: #9a9b91;
+}
+
+.field-control:focus {
+  border-color: #71835a;
+  box-shadow: 0 0 0 4px rgb(113 131 90 / 15%);
+  outline: none;
+}
+
+.field-control.field-invalid {
+  border-color: #c96d5c;
+}

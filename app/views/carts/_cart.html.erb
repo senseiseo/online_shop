@@ -1,4 +1,25 @@
-<% if cart.cart_items.any? %>
-  <div class="mt-6 space-y-4"><% cart.cart_items.includes(:product).each do |item| %><article class="flex flex-col gap-4 rounded border bg-white p-4 sm:flex-row sm:items-center sm:justify-between"><div class="min-w-0"><h2 class="font-semibold"><%= item.product.name %></h2><p><%= rubles(item.product.price_cents) %></p></div><div class="flex flex-wrap items-center gap-2"><%= form_with model: item, class: "flex flex-wrap items-center gap-2" do |form| %><%= form.label :quantity, "Количество", class: "sr-only" %><%= form.number_field :quantity, min: 0, class: "w-20 rounded border", data: { controller: "quantity", action: "change->quantity#submit" } %><%= form.submit "Обновить", class: "rounded border px-2 py-1" %><% end %><%= button_to "Удалить", cart_item_path(item), method: :delete, class: "text-sm underline" %></div></article><% end %></div>
-  <p class="mt-6 text-xl font-semibold">Итого: <%= rubles(cart.cart_items.includes(:product).sum { |item| item.product.price_cents * item.quantity }) %></p><%= link_to "Оформить заказ", new_checkout_path, class: "mt-4 inline-block rounded bg-stone-900 px-4 py-2 text-white", data: { turbo_frame: "_top" } %>
-<% else %><p class="mt-6 text-stone-600">Корзина пуста.</p><% end %>
+<% items = cart.cart_items.includes(:product) %>
+<% if items.any? %>
+  <div class="mt-10 max-w-4xl space-y-3">
+    <% items.each do |item| %>
+      <article class="flex flex-col gap-4 rounded-2xl border border-[#dfe2d5] bg-white/80 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+        <div class="flex min-w-0 items-center gap-4">
+          <% if item.product.images.attached? %><%= image_tag item.product.images.first, class: "size-20 rounded-xl object-cover", alt: item.product.name %><% else %><div class="flex size-20 items-center justify-center rounded-xl bg-[#edf0e5] text-[#9cac87]"><%= icon(:sparkle, size: 22) %></div><% end %>
+          <div class="min-w-0"><p class="text-xs font-semibold uppercase tracking-[0.12em] text-[#8c9786]"><%= item.product.category.name %></p><h2 class="mt-1 truncate font-semibold"><%= item.product.name %></h2><p class="mt-1 text-sm text-[#70796f]"><%= rubles(item.product.price_cents) %> / шт.</p></div>
+        </div>
+        <div class="flex items-center justify-between gap-4 sm:justify-end">
+          <%= form_with model: item, class: "flex items-center gap-2" do |form| %><%= form.label :quantity, "Количество", class: "sr-only" %><%= form.number_field :quantity, min: 0, class: "field-control w-20 text-center", data: { controller: "quantity", action: "change->quantity#submit" } %><%= form.submit "Обновить", class: "sr-only" %><% end %>
+          <p class="min-w-24 text-right font-semibold"><%= rubles(item.product.price_cents * item.quantity) %></p>
+          <%= button_to cart_item_path(item), method: :delete, class: "flex size-9 items-center justify-center rounded-full text-[#9a6c63] transition hover:bg-[#fff0ec]", aria: { label: "Удалить #{item.product.name}" } do %><%= icon(:trash, size: 17) %><span class="sr-only">Удалить</span><% end %>
+        </div>
+      </article>
+    <% end %>
+  </div>
+  <% total_cents = items.sum { |item| item.product.price_cents * item.quantity } %>
+  <div class="mt-6 flex max-w-4xl flex-col gap-5 rounded-2xl bg-[#223329] p-6 text-white sm:flex-row sm:items-center sm:justify-between sm:p-7">
+    <div><p class="text-sm text-[#cbd5c4]">Итого к оплате</p><p class="mt-1 text-2xl font-semibold text-[#dbe7ba]"><%= rubles(total_cents) %></p></div>
+    <%= link_to new_checkout_path, class: "inline-flex items-center justify-center gap-2 rounded-full bg-[#dbe7ba] px-5 py-3 text-sm font-semibold text-[#223329] transition hover:bg-white", data: { turbo_frame: "_top" } do %>Оформить заказ <%= icon(:arrow_right, size: 17) %><% end %>
+  </div>
+<% else %>
+  <div class="mt-10 max-w-2xl rounded-2xl border border-dashed border-[#bfc9b3] bg-white/60 px-6 py-14 text-center"><div class="mx-auto flex size-14 items-center justify-center rounded-full bg-[#edf0e5] text-[#71835a]"><%= icon(:bag, size: 24) %></div><p class="mt-5 text-lg font-semibold">Корзина пуста</p><p class="mt-2 text-sm text-[#70796f]">Добавьте что-нибудь из каталога — и оно появится здесь.</p><%= link_to "Перейти в каталог", catalog_path, class: "mt-6 inline-flex rounded-full bg-[#223329] px-5 py-3 text-sm font-semibold text-white" %></div>
+<% end %>

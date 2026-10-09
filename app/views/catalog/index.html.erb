@@ -1,18 +1,21 @@
 <% page_metadata title: "Каталог", description: "Каталог предметов для дома." %>
 <section class="w-full">
-  <h1 class="text-3xl font-bold">Каталог</h1>
-  <%= form_with url: catalog_path, method: :get, class: "mt-5 flex flex-wrap gap-3", data: { turbo: false } do |form| %>
+  <div class="max-w-2xl"><p class="text-sm font-semibold uppercase tracking-[0.16em] text-[#71835a]">Коллекция</p><h1 class="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">Найдите вещь для своего пространства.</h1><p class="mt-4 leading-7 text-[#70796f]">Спокойные формы, тёплые материалы и предметы, которые легко вписываются в жизнь.</p></div>
+  <div class="mt-8 rounded-2xl border border-[#dfe2d5] bg-white/70 p-4 sm:p-5">
+    <div class="mb-4 flex items-center gap-2 text-sm font-semibold"><span class="flex size-8 items-center justify-center rounded-full bg-[#dbe7ba] text-[#526548]"><%= icon(:sparkle, size: 16) %></span> Подберите по настроению</div>
+    <%= form_with url: catalog_path, method: :get, class: "grid gap-3 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_auto_auto]", data: { turbo: false } do |form| %>
     <%= form.label :category, "Категория", class: "sr-only" %>
-    <%= form.select :category, @categories.map { |category| [category.name, category.slug] }, { include_blank: "Все категории", selected: @selected_category&.slug }, class: "rounded border-stone-300" %>
+    <%= form.select :category, @categories.map { |category| [category.name, category.slug] }, { include_blank: "Все категории", selected: @selected_category&.slug }, class: "field-control" %>
     <%= form.label :sort, "Сортировка", class: "sr-only" %>
-    <%= form.select :sort, [["По умолчанию", ""], ["Сначала дешевле", "price_asc"], ["Сначала дороже", "price_desc"]], { selected: params[:sort] }, class: "rounded border-stone-300" %>
-    <label class="flex items-center gap-2"><%= form.check_box :featured, { checked: params[:featured] == "1" }, "1", "0" %> Избранное</label>
-    <%= form.submit "Показать", class: "rounded bg-stone-900 px-4 py-2 text-white" %>
-  <% end %>
+    <%= form.select :sort, [["По умолчанию", ""], ["Сначала дешевле", "price_asc"], ["Сначала дороже", "price_desc"]], { selected: params[:sort] }, class: "field-control" %>
+    <label class="flex items-center gap-2 rounded-xl border border-[#dfe2d5] px-4 text-sm font-medium"><%= form.check_box :featured, { checked: params[:featured] == "1" }, "1", "0" %> Только избранное</label>
+    <%= form.submit "Показать", class: "rounded-xl bg-[#223329] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#526548]" %>
+    <% end %>
+  </div>
   <% if @products.any? %>
-    <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"><%= render partial: "shared/product_card", collection: @products, as: :product %></div>
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"><%= render partial: "shared/product_card", collection: @products, as: :product %></div>
     <%= render "shared/pagination", pagy: @pagy %>
   <% else %>
-    <p class="mt-6 text-stone-600">Товары не найдены.</p>
+    <div class="mt-10 rounded-2xl border border-dashed border-[#bfc9b3] bg-white/60 px-6 py-12 text-center"><div class="mx-auto flex size-12 items-center justify-center rounded-full bg-[#edf0e5] text-[#71835a]"><%= icon(:sparkle) %></div><p class="mt-4 font-semibold">По этим фильтрам пока тихо.</p><p class="mt-1 text-sm text-[#70796f]">Попробуйте выбрать другую категорию.</p></div>
   <% end %>
 </section>

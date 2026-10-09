@@ -1,9 +1,27 @@
 <% page_metadata title: @product.name, description: @product.short_description, image: (@product.images.attached? ? rails_blob_url(@product.images.first) : nil) %>
-<article class="w-full max-w-4xl">
-  <p class="text-sm text-stone-500"><%= link_to @product.category.name, category_path(@product.category), class: "underline" %></p>
-  <h1 class="mt-2 text-3xl font-bold"><%= @product.name %></h1>
-  <div class="mt-6 grid gap-6 md:grid-cols-2">
-    <div class="space-y-3" data-controller="gallery"><% @product.images.each_with_index do |image, index| %><%= image_tag image, class: "w-full rounded object-cover #{'hidden' unless index.zero?}", alt: @product.name, data: { gallery_target: "image" } %><% end %><% if @product.images.many? %><div class="flex gap-2"><% @product.images.each_with_index do |_image, index| %><button type="button" class="rounded border px-2 py-1" data-action="gallery#show" data-gallery-index-param="<%= index %>"><%= index + 1 %></button><% end %></div><% end %></div>
-    <div><p class="text-2xl font-semibold"><%= rubles(@product.price_cents) %></p><p class="mt-4 text-stone-600"><%= @product.short_description %></p><%= button_to "В корзину", cart_items_path, params: { cart_item: { product_id: @product.id } }, class: "mt-5 rounded bg-stone-900 px-4 py-2 font-medium text-white" %><div class="prose mt-6"><%= @product.description %></div></div>
+<article class="w-full">
+  <p class="text-sm font-medium text-[#71835a]"><%= link_to "Каталог", catalog_path, class: "hover:text-[#223329]" %> <span class="px-1 text-[#b5bdb0]">/</span> <%= link_to @product.category.name, category_path(@product.category), class: "hover:text-[#223329]" %></p>
+  <div class="mt-6 grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+    <div class="space-y-3" data-controller="gallery">
+      <% if @product.images.attached? %>
+        <% @product.images.each_with_index do |image, index| %><%= image_tag image, class: "aspect-square w-full rounded-[1.5rem] object-cover #{'hidden' unless index.zero?}", alt: @product.name, data: { gallery_target: "image" } %><% end %>
+      <% else %>
+        <div class="flex aspect-square items-center justify-center rounded-[1.5rem] bg-[#e7ebdf] text-[#9cac87]"><%= icon(:sparkle, size: 56, class_name: "size-14") %></div>
+      <% end %>
+      <% if @product.images.many? %><div class="flex gap-2"><% @product.images.each_with_index do |image, index| %><button type="button" class="overflow-hidden rounded-xl border-2 border-transparent bg-white p-0.5 transition hover:border-[#9cac87]" data-action="gallery#show" data-gallery-index-param="<%= index %>"><%= image_tag image, class: "size-16 rounded-lg object-cover", alt: "Изображение #{index + 1}" %></button><% end %></div><% end %>
+    </div>
+    <div class="rounded-[1.5rem] border border-[#dfe2d5] bg-white/75 p-6 sm:p-8">
+      <p class="text-sm font-semibold uppercase tracking-[0.16em] text-[#71835a]"><%= @product.category.name %></p>
+      <h1 class="mt-3 text-4xl font-semibold tracking-tight"><%= @product.name %></h1>
+      <p class="mt-5 text-2xl font-semibold text-[#526548]"><%= rubles(@product.price_cents) %></p>
+      <p class="mt-5 leading-7 text-[#70796f]"><%= @product.short_description %></p>
+      <%= button_to cart_items_path, params: { cart_item: { product_id: @product.id } }, class: "mt-8 flex w-full items-center justify-center gap-2 rounded-full bg-[#223329] px-5 py-3.5 font-semibold text-white transition hover:bg-[#526548]" do %><%= icon(:bag, size: 19) %> <span>В корзину</span><% end %>
+      <div class="mt-8 grid gap-3 border-t border-[#dfe2d5] pt-6 text-sm text-[#667064] sm:grid-cols-3">
+        <div class="flex items-center gap-2"><%= icon(:truck, size: 18, class_name: "size-[18px] text-[#71835a]") %> Быстрая доставка</div>
+        <div class="flex items-center gap-2"><%= icon(:shield, size: 18, class_name: "size-[18px] text-[#71835a]") %> Надёжная покупка</div>
+        <div class="flex items-center gap-2"><%= icon(:message, size: 18, class_name: "size-[18px] text-[#71835a]") %> Поможем выбрать</div>
+      </div>
+      <% if @product.description.present? %><div class="prose mt-8 max-w-none border-t border-[#dfe2d5] pt-6 text-[#596257]"><%= @product.description %></div><% end %>
+    </div>
   </div>
 </article>

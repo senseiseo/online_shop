@@ -88,6 +88,16 @@ RSpec.describe "store models" do
     expect(order.errors[:base]).to include("phone or email is required")
   end
 
+  it "validates checkout contact formats and field lengths" do
+    order = build(:order, name: "A", phone: "123", email: "not-an-email", comment: "x" * 1_001)
+
+    expect(order).not_to be_valid
+    expect(order.errors[:name]).to be_present
+    expect(order.errors[:phone]).to be_present
+    expect(order.errors[:email]).to be_present
+    expect(order.errors[:comment]).to be_present
+  end
+
   it "defines order payment and lifecycle enums" do
     expect(Order.statuses).to eq("new" => 0, "confirmed" => 1, "processing" => 2, "ready" => 3, "completed" => 4, "cancelled" => 5)
     expect(Order.payment_methods).to eq("cash" => 0, "card_on_pickup" => 1, "transfer" => 2)

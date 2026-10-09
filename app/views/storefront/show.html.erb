@@ -1,28 +1,64 @@
 <% page_metadata title: "Магазин", description: "Предметы для спокойной жизни." %>
 
-<section class="w-full space-y-12">
-  <header class="rounded-xl bg-stone-900 px-6 py-16 text-white sm:px-10">
-    <p class="text-sm uppercase tracking-widest text-stone-300">Свой дом</p>
-    <h1 class="mt-3 text-4xl font-bold sm:text-5xl">Предметы для спокойной жизни</h1>
-    <%= link_to "Смотреть каталог", catalog_path, class: "mt-6 inline-block rounded bg-white px-4 py-2 font-medium text-stone-900" %>
-  </header>
-
-  <section aria-labelledby="categories-heading">
-    <div class="flex items-baseline justify-between"><h2 id="categories-heading" class="text-2xl font-bold">Категории</h2><%= link_to "Каталог", catalog_path, class: "text-sm underline" %></div>
-    <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-      <% @categories.each do |category| %><%= link_to category.name, category_path(category), class: "rounded border border-stone-200 p-4 font-medium hover:bg-stone-50" %><% end %>
+<% featured_product = @products.first %>
+<section class="relative overflow-hidden rounded-[2rem] bg-[#223329] text-[#f7f5ef] shadow-[0_24px_70px_-30px_rgba(34,51,41,0.55)] lg:grid lg:grid-cols-[1.05fr_0.95fr]">
+  <div class="relative z-10 px-6 py-12 sm:px-10 sm:py-16 lg:px-14 lg:py-20">
+    <p class="inline-flex items-center gap-2 rounded-full border border-[#a9bd82]/40 bg-[#a9bd82]/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-[#dbe7ba]"><%= icon(:sparkle, size: 14) %> Интерьер без суеты</p>
+    <h1 class="mt-6 max-w-xl text-4xl font-semibold leading-[1.05] tracking-[-0.04em] sm:text-6xl">Вещи, которые делают дом тише.</h1>
+    <p class="mt-6 max-w-lg text-base leading-7 text-[#cbd5c4] sm:text-lg">Небольшая коллекция мебели, света и деталей, с которыми каждый день становится немного уютнее.</p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <%= link_to catalog_path, class: "inline-flex items-center gap-2 rounded-full bg-[#dbe7ba] px-5 py-3 text-sm font-semibold text-[#223329] transition hover:bg-white" do %>Смотреть каталог <%= icon(:arrow_right, size: 17) %><% end %>
+      <%= link_to "О нас", new_inquiry_path, class: "rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:border-white/50" %>
     </div>
-  </section>
-
-  <section aria-labelledby="featured-heading">
-    <h2 id="featured-heading" class="text-2xl font-bold">Избранные товары</h2>
-    <div class="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"><%= render partial: "shared/product_card", collection: @products, as: :product %></div>
-  </section>
-
-  <section aria-labelledby="posts-heading">
-    <div class="flex items-baseline justify-between"><h2 id="posts-heading" class="text-2xl font-bold">Статьи</h2><%= link_to "Все статьи", posts_path, class: "text-sm underline" %></div>
-    <div class="mt-4 grid gap-5 md:grid-cols-3">
-      <% @posts.each do |post| %><article class="rounded border border-stone-200 p-4"><h3 class="font-semibold"><%= link_to post.title, post_path(post) %></h3><p class="mt-2 text-sm text-stone-600"><%= post.excerpt %></p></article><% end %>
+    <div class="mt-12 grid max-w-md grid-cols-3 gap-5 border-t border-white/15 pt-5 text-sm">
+      <div><p class="text-2xl font-semibold text-white">10+</p><p class="mt-1 text-[#aebcaf]">товаров</p></div>
+      <div><p class="text-2xl font-semibold text-white">3</p><p class="mt-1 text-[#aebcaf]">категории</p></div>
+      <div><p class="text-2xl font-semibold text-white">24/7</p><p class="mt-1 text-[#aebcaf]">онлайн</p></div>
     </div>
-  </section>
+  </div>
+  <div class="relative hidden min-h-[440px] overflow-hidden bg-[#34483a] lg:block">
+    <% if featured_product&.images&.attached? %>
+      <%= image_tag featured_product.images.first, class: "absolute inset-0 size-full object-cover opacity-85", alt: featured_product.name %>
+    <% else %>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_35%_30%,#a9bd82_0,transparent_27%),linear-gradient(135deg,#526548,#223329)]"></div>
+    <% end %>
+    <div class="absolute inset-0 bg-gradient-to-r from-[#223329] via-transparent to-transparent"></div>
+    <% if featured_product %>
+      <div class="absolute bottom-8 left-8 right-8 flex items-end justify-between rounded-2xl border border-white/20 bg-[#223329]/65 p-4 backdrop-blur">
+        <div><p class="text-xs uppercase tracking-widest text-[#cbd5c4]">Избранное</p><p class="mt-1 font-semibold"><%= featured_product.name %></p></div>
+        <p class="font-semibold text-[#dbe7ba]"><%= rubles(featured_product.price_cents) %></p>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<section class="mt-20" aria-labelledby="categories-heading">
+  <div class="flex items-end justify-between gap-4"><div><p class="text-sm font-semibold uppercase tracking-[0.16em] text-[#71835a]">Выберите своё</p><h2 id="categories-heading" class="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">По настроению дома</h2></div><%= link_to "Весь каталог", catalog_path, class: "hidden items-center gap-1 text-sm font-semibold text-[#526548] sm:flex" %></div>
+  <div class="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <% @categories.each do |category| %>
+      <%= link_to category_path(category), class: "group flex items-center justify-between rounded-2xl border border-[#dfe2d5] bg-white/70 p-5 transition hover:-translate-y-0.5 hover:border-[#9cac87] hover:bg-white" do %>
+        <div><p class="text-lg font-semibold"><%= category.name %></p><p class="mt-1 text-sm text-[#7a8177]">Смотреть подборку</p></div>
+        <span class="flex size-10 items-center justify-center rounded-full bg-[#edf0e5] text-[#526548] transition group-hover:bg-[#dbe7ba]"><%= icon(:chevron_right) %></span>
+      <% end %>
+    <% end %>
+  </div>
+</section>
+
+<section class="mt-20" aria-labelledby="featured-heading">
+  <div class="flex items-end justify-between gap-4"><div><p class="text-sm font-semibold uppercase tracking-[0.16em] text-[#71835a]">Наш выбор</p><h2 id="featured-heading" class="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Избранные предметы</h2></div><%= link_to "Все товары", catalog_path, class: "hidden items-center gap-1 text-sm font-semibold text-[#526548] sm:flex" %></div>
+  <div class="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"><%= render partial: "shared/product_card", collection: @products, as: :product %></div>
+</section>
+
+<section class="mt-20" aria-labelledby="posts-heading">
+  <div class="flex items-end justify-between gap-4"><div><p class="text-sm font-semibold uppercase tracking-[0.16em] text-[#71835a]">Журнал</p><h2 id="posts-heading" class="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Немного вдохновения</h2></div><%= link_to "Все статьи", posts_path, class: "hidden items-center gap-1 text-sm font-semibold text-[#526548] sm:flex" %></div>
+  <div class="mt-7 grid gap-5 md:grid-cols-3">
+    <% @posts.each do |post| %>
+      <article class="group rounded-2xl border border-[#dfe2d5] bg-white/60 p-6 transition hover:-translate-y-0.5 hover:bg-white">
+        <p class="text-xs font-semibold uppercase tracking-[0.16em] text-[#9aa193]">Заметка</p>
+        <h3 class="mt-8 text-xl font-semibold leading-tight"><%= link_to post.title, post_path(post), class: "group-hover:text-[#526548]" %></h3>
+        <p class="mt-3 text-sm leading-6 text-[#70796f]"><%= post.excerpt %></p>
+        <%= link_to post_path(post), class: "mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#526548]" do %>Читать <%= icon(:arrow_right, size: 16) %><% end %>
+      </article>
+    <% end %>
+  </div>
 </section>
