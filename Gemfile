@@ -29,7 +29,7 @@ gem "dartsass-rails"
 # Public catalog URLs and pagination; both remove more application code than
 # their small, focused dependencies add.
 gem "friendly_id", "~> 5.5"
-gem "pagy", "~> 43.0"
+gem "pagy", "~> 43.8"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
